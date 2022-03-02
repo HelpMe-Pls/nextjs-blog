@@ -1,4 +1,3 @@
-
 import { Pane, Card } from 'evergreen-ui'
 import GithubIcon from './githubIcon'
 
