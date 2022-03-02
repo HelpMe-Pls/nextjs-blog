@@ -66,23 +66,13 @@ BlogPost.defaultProps = {
 export async function getStaticPaths() {
 	const postsDirectory = path.join(process.cwd(), 'posts')
 	const filenames = fs.readdirSync(postsDirectory)
-	const posts = filenames.map((name) => {
-		const filePath = path.join(postsDirectory, name)
-		const file = fs.readFileSync(filePath, 'utf-8')
-		const { data } = matter(file)
-		return data
-	})
+	const paths = filenames.map((name) => ({
+		params: { slug: name.replace('.mdx', '') },
+	}))
 
 	// don't get paths for cms posts, instead, let fallback handle it
-	return {
-		paths: posts.map((post) => ({
-			params: {
-				slug: post.slug,
-			},
-		})),
-		// https://nextjs.org/docs/api-reference/data-fetching/get-static-paths#fallback-false
-		fallback: true,
-	}
+	// https://nextjs.org/docs/api-reference/data-fetching/get-static-paths#fallback-false
+	return { paths, fallback: true }
 }
 
 export async function getStaticProps({ params }) {
