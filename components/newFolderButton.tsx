@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { Icon, PlusIcon, Pane, Tooltip } from 'evergreen-ui'
 
 const NewFolderButton: FC<{ onClick: any; tooltip?: string; size?: number }> = ({ onClick, tooltip, size }) => {

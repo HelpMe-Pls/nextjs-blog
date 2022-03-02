@@ -1,4 +1,4 @@
-import React from 'react'
+
 import { Pane, Card } from 'evergreen-ui'
 import GithubIcon from './githubIcon'
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Dialog, TextInput } from 'evergreen-ui'
 
 const NewFolderDialog = ({ onNewFolder, close, ...props }) => {

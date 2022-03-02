@@ -1,4 +1,3 @@
-import React from 'react'
 import { Pane, majorScale, Text } from 'evergreen-ui'
 import Logo from '../components/logo'
 
@@ -37,7 +36,7 @@ const Signin = () => {
         paddingX={majorScale(7)}
       >
         <Pane width="100%" textAlign="center">
-          <SocialButton type="github" onClick={() => {}} />
+          <SocialButton type="github" onClick={() => { }} />
         </Pane>
       </Pane>
     </Pane>

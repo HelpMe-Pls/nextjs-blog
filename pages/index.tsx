@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { Pane, majorScale } from 'evergreen-ui'
 import Container from '../components/container'
 import Hero from '../components/hero'

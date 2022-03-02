@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import { FC } from 'react'
 import { Pane, Heading, majorScale } from 'evergreen-ui'
 import Link from 'next/link'
 import dynamic from 'next/dynamic'

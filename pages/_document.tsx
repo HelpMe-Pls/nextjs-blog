@@ -1,4 +1,3 @@
-import React from 'react'
 import Document, { Head, Main, NextScript, Html } from 'next/document'
 import { extractStyles } from 'evergreen-ui'
 

@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import { FC, useState } from 'react'
 import { Pane, Heading, majorScale, DocumentIcon, Button } from 'evergreen-ui'
 import Link from 'next/link'
 import { getRandomGradientCss } from '../utils/gradients'
