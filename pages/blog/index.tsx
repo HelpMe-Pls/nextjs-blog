@@ -52,7 +52,7 @@ export async function getStaticProps() {
 			return data
 		}),
 		['publishedOn'],
-		['desc'],
+		['desc']
 	)
 
 	return { props: { posts } }

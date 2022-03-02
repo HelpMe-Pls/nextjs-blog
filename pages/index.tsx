@@ -35,7 +35,6 @@ const Home: FC<{ content: { hero: any; features: any[] } }> = ({ content }) => {
 	)
 }
 
-
 // Should really get this content from our CMS:
 Home.defaultProps = {
 	content: {
@@ -45,10 +44,10 @@ Home.defaultProps = {
 }
 
 // By using this:
-export function getStaticProps() {
+export function getStaticProps(ctx) {
 	return {
 		props: {
-			content: home.published,
+			content: ctx.preview ? home.draft : home.published,
 		},
 	}
 }
