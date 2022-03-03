@@ -1,4 +1,4 @@
-// Kinda like a demonstration of a CMS
+// Kinda like a presentation of a CMS
 
 export const home = {
   draft: {
