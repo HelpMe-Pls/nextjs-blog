@@ -20,8 +20,25 @@ const App: FC<{
 	const router = useRouter()
 	const [newFolderIsShown, setIsShown] = useState(false)
 	const [session, loading] = useSession()
+	const [allFolders, setFolders] = useState(folders || [])
 
 	if (loading) return null
+
+	const handleNewFolder = async (name: string) => {
+		const res = await fetch(
+			`${process.env.NEXT_PUBLIC_API_HOST}/api/folder/`,
+			{
+				method: 'POST',
+				body: JSON.stringify({ name }),
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			}
+		)
+
+		const { data } = await res.json()
+		setFolders((state) => [...state, data])
+	}
 
 	const Page = () => {
 		if (activeDoc) {
@@ -74,7 +91,7 @@ const App: FC<{
 					<NewFolderButton onClick={() => setIsShown(true)} />
 				</Pane>
 				<Pane>
-					<FolderList folders={[{ _id: 1, name: 'yep' }]} />{' '}
+					<FolderList folders={folders} />{' '}
 				</Pane>
 			</Pane>
 			<Pane
@@ -90,7 +107,7 @@ const App: FC<{
 			<NewFolderDialog
 				close={() => setIsShown(false)}
 				isShown={newFolderIsShown}
-				onNewFolder={() => {}}
+				onNewFolder={handleNewFolder}
 			/>
 		</Pane>
 	)
