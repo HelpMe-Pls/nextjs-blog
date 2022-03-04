@@ -99,9 +99,11 @@ App.defaultProps = {
 	folders: [],
 }
 
-// use getServerSideProps() coz this page is "dynamic": fetch the "data" initially on the server, then we'll handle mutations from the client
-// {context} is like a {req, res} object
-// And the page WAITS for this function to done its execution THEN it'll render, i.e. this function is ALWAYS be executed whenever we hit this '/app' route
+/** 
+  use getServerSideProps() coz this page is "dynamic": fetch the "data" initially on the server, then we'll handle mutations from the client
+  {context} is like a {req, res} object
+  And the page WAITS for this function to done its execution THEN it'll render, i.e. this function is ALWAYS be executed whenever we hit this '/app' route
+ */
 export async function getServerSideProps(context) {
 	const session = await getSession(context)
 	return {
