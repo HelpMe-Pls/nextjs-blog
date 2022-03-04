@@ -1,6 +1,7 @@
-import React, { FC, useState } from 'react'
+import { FC, useState } from 'react'
 import { Pane, Dialog, majorScale } from 'evergreen-ui'
 import { useRouter } from 'next/router'
+import { getSession, useSession } from 'next-auth/client'
 import Logo from '../../components/logo'
 import FolderList from '../../components/folderList'
 import NewFolderButton from '../../components/newFolderButton'
@@ -17,6 +18,9 @@ const App: FC<{
 }> = ({ folders, activeDoc, activeFolder, activeDocs }) => {
 	const router = useRouter()
 	const [newFolderIsShown, setIsShown] = useState(false)
+	const [session, loading] = useSession()
+
+	if (loading) return null
 
 	const Page = () => {
 		if (activeDoc) {
@@ -30,7 +34,7 @@ const App: FC<{
 		return null
 	}
 
-	if (false) {
+	if (!loading && !session) {
 		return (
 			<Dialog
 				isShown
@@ -69,7 +73,7 @@ const App: FC<{
 					<NewFolderButton onClick={() => setIsShown(true)} />
 				</Pane>
 				<Pane>
-					<FolderList folders={folders} />{' '}
+					<FolderList folders={[{ _id: 1, name: 'yep' }]} />{' '}
 				</Pane>
 			</Pane>
 			<Pane
@@ -79,7 +83,7 @@ const App: FC<{
 				overflowY="auto"
 				position="relative"
 			>
-				<User user={{}} />
+				<User user={session.user} />
 				<Page />
 			</Pane>
 			<NewFolderDialog
@@ -93,6 +97,16 @@ const App: FC<{
 
 App.defaultProps = {
 	folders: [],
+}
+
+// use getServerSideProps() coz this page is "dynamic": fetch the "data" initially on the server, then we'll handle mutations from the client
+// {context} is like a {req, res} object
+// And the page WAITS for this function to done its execution THEN it'll render, i.e. this function is ALWAYS be executed whenever we hit this '/app' route
+export async function getServerSideProps(context) {
+	const session = await getSession(context)
+	return {
+		props: { session },
+	}
 }
 
 /**

@@ -7,7 +7,8 @@ import { Provider } from 'next-auth/client'
 
 function MyApp({ Component, pageProps }) {
 	return (
-		// auth provider
+		// auth provider: {pageProps} is the {props} returned from
+		// 'pages\app\[[...id]].tsx >> getServerSideProps()'
 		<Provider session={pageProps.session}>
 			<Component {...pageProps} />
 		</Provider>
