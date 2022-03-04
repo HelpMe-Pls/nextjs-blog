@@ -9,6 +9,7 @@ import User from '../../components/user'
 import FolderPane from '../../components/folderPane'
 import DocPane from '../../components/docPane'
 import NewFolderDialog from '../../components/newFolderDialog'
+import { connectToDB, folder, doc } from '../../db'
 
 const App: FC<{
 	folders?: any[]
@@ -106,20 +107,40 @@ App.defaultProps = {
  */
 export async function getServerSideProps(context) {
 	const session = await getSession(context)
+	if (!session || !session.user) {
+		return { props: {} }
+	}
+
+	const props: any = { session }
+	const { db } = await connectToDB()
+	const folders = await folder.getFolders(db, session.user.id)
+	props.folders = folders
+
+	if (context.params.id) {
+		const activeFolder = folders.find((f) => f._id === context.params.id[0])
+		const activeDocs = await doc.getDocsByFolder(db, activeFolder._id)
+		props.activeFolder = activeFolder
+		props.activeDocs = activeDocs
+
+		const activeDocId = context.params.id[1] // [1] coz it's getting the the path to the doc, which follows the path of the folder i.e. /app/folder_id is context.params.id[0] and /app/folder_id/document_1 is context.params.id[1]
+
+		if (activeDocId) {
+			props.activeDoc = await doc.getOneDoc(db, activeDocId)
+		}
+	}
+
 	return {
-		props: { session },
+		props,
 	}
 }
 
 /**
- * Catch all handler. Must handle all different page
- * states.
- * 1. Folders - none selected
- * 2. Folders => Folder selected
- * 3. Folders => Folder selected => Document selected
+ * Catch all handler. Must handle all different page states:
+ * 1. Folders - none selected: i.e. navigate to '/app'
+ * 2. Folders => Folder selected: i.e. navigate to '/app/folder_id', showing the documents of that folder
+ * 3. Folders => Folder selected => Document selected: i.e. navigate to '/app/folder_id/document_1', showing the SELECTED document of that folder
  *
- * An unauth user should not be able to access this page.
- *
+ * An unauth user should NOT be able to access this page.
  * @param context
  */
 export default App
