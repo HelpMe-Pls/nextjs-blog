@@ -37,6 +37,8 @@ const App: FC<{
 		)
 
 		const { data } = await res.json()
+
+		// create a new state that merges the initialized state ({folders}, from the server) and the state that we got from the API above, and because it depends on the previous state (to actually get ALL the folders), we'll have to use the callback function
 		setFolders((state) => [...state, data])
 	}
 
@@ -91,7 +93,7 @@ const App: FC<{
 					<NewFolderButton onClick={() => setIsShown(true)} />
 				</Pane>
 				<Pane>
-					<FolderList folders={folders} />{' '}
+					<FolderList folders={allFolders} />{' '}
 				</Pane>
 			</Pane>
 			<Pane

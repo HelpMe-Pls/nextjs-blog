@@ -23,6 +23,8 @@ const FolderPane: FC<{ folder: any; docs: any[] }> = ({ folder, docs }) => {
 		)
 
 		const { data } = await res.json()
+
+		// create a new state that merges the initialized state ({docs}, from the server) and the state that we got from the API above
 		setDocs((state) => [...state, data])
 	}
 
