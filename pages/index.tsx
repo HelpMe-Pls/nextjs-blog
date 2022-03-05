@@ -28,7 +28,7 @@ const Home: FC<{ content: { hero: any; features: any[] } }> = ({ content }) => {
 			</main>
 			<footer>
 				<Pane background="overlay" paddingY={majorScale(9)}>
-					<Container>hello</Container>
+					<Container>Nothing here...yet.</Container>
 				</Pane>
 			</footer>
 		</Pane>
