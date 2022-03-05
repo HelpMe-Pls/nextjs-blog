@@ -6,7 +6,7 @@ import SocialButton from '../components/socialButton'
 import { useRouter } from 'next/router'
 
 const Signin = () => {
-	const [session, loading] = useSession()
+	const [session] = useSession()
 	const router = useRouter()
 
 	useEffect(() => {
